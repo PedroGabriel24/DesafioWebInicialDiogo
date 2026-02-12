@@ -14,7 +14,7 @@ public class UsersControllerImpl implements UsersApi {
     private final UsersService usersService;
 
     @Override
-    public ResponseEntity<String> cadastro(String token, UsersRequest request) {
+    public ResponseEntity<String> cadastro(UsersRequest request) {
         usersService.cadastro(request);
         return ResponseEntity.ok("ok");
     }

@@ -19,6 +19,5 @@ import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
         bearerFormat = "JWT"
 )
 public class OpenApiConfig {
-    // no-op - only annotations are needed to register the security scheme with springdoc
 }
 
