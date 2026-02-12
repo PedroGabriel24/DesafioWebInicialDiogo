@@ -22,6 +22,6 @@ public class ProfileJWTToken {
     public ProfileJWTToken(final Users info) {
         this.name = info.getNome();
         this.email = info.getEmail();
-        this.profile = info.getTipo().getProfileName();
+        this.profile = info.getTipo() != null ? info.getTipo().name() : null;
     }
 }

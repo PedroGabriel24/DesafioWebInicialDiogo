@@ -1,4 +1,4 @@
-package org.example.desafiodiogo.config;
+package org.example.desafiodiogo.config.security;
 
 import org.example.desafiodiogo.repository.UsersRepository;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,4 +1,4 @@
-package org.example.desafiodiogo.config;
+package org.example.desafiodiogo.config.security;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,13 +6,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import org.example.desafiodiogo.dto.auth.ProfileJWTToken;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.security.cert.X509CertSelector;
 import java.util.Date;
 import java.util.Map;
 

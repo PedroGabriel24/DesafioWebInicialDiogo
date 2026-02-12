@@ -9,8 +9,9 @@ public enum ProfileEnum {
     PROFESSOR("Professor"),
     ALUNO("Aluno");
 
-    String profileName;
+    final String profileName;
 
-    ProfileEnum(String administrador) {
+    ProfileEnum(String profileName) {
+        this.profileName = profileName;
     }
 }

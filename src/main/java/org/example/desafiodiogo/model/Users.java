@@ -34,7 +34,7 @@ public class Users implements UserDetails {
     private LocalDate nascimento;
     private String email;
     private String senha;
-    private Integer telefone;
+    private String telefone;
     private String status;
 
     private LocalDateTime cadastro;
