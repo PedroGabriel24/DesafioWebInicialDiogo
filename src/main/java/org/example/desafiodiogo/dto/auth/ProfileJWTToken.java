@@ -15,12 +15,14 @@ import java.util.Map;
 @Builder
 public class ProfileJWTToken {
 
+    private String userId;
     private String name;
     private String email;
     private String profile;
     private List<Map<String, Object>> extras;
 
     public ProfileJWTToken(final Users info) {
+        this.userId = info.getId() != null ? info.getId().toString() : null;
         this.name = info.getNome();
         this.email = info.getEmail();
         this.profile = info.getTipo() != null ? info.getTipo().name() : null;

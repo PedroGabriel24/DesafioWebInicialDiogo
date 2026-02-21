@@ -2,7 +2,6 @@ package org.example.desafiodiogo.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import org.example.desafiodiogo.dto.aluno.AlunoMateriaPorSerieResponse;
 import org.example.desafiodiogo.dto.aluno.AlunoSerieRequest;
 import org.example.desafiodiogo.dto.aluno.AlunoSerieResponse;
 import org.example.desafiodiogo.dto.professor.ProfessorMateriaSerieRequest;
@@ -29,17 +28,17 @@ public interface AdminApi {
 
     @GetMapping("/usuarios/{id}")
     @Operation(summary = "Obtém um usuário pelo ID (apenas ADMIN)", security = @SecurityRequirement(name = "bearerAuth"))
-    ResponseEntity<UsersResponse> obterUsuarioPorId(@PathVariable("id") Long id);
+    ResponseEntity<UsersResponse> obterUsuarioPorId(@PathVariable Long id);
 
     @PutMapping("/usuarios/{id}")
     @Operation(summary = "Atualiza um usuário (apenas ADMIN)", security = @SecurityRequirement(name = "bearerAuth"))
     ResponseEntity<UsersResponse> atualizarUsuario(
-            @PathVariable("id") Long id,
+            @PathVariable Long id,
             @RequestBody UsersUpdateRequest request);
 
     @DeleteMapping("/usuarios/{id}")
     @Operation(summary = "Deleta um usuário (apenas ADMIN)", security = @SecurityRequirement(name = "bearerAuth"))
-    ResponseEntity<String> deletarUsuario(@PathVariable("id") Long id);
+    ResponseEntity<String> deletarUsuario(@PathVariable Long id);
 
     @PostMapping("/alunos/serie")
     @Operation(summary = "Adiciona um aluno a uma série (apenas ADMIN)", security = @SecurityRequirement(name = "bearerAuth"))

@@ -2,11 +2,10 @@ package org.example.desafiodiogo.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import org.example.desafiodiogo.dto.aluno.AlunoMateriaPorSerieResponse;
+import org.example.desafiodiogo.dto.professor.LancarNotaRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RequestMapping("/professor")
@@ -18,7 +17,10 @@ public interface ProfessorApi {
 
     @GetMapping("/alunos-por-materia/{idMateria}")
     @Operation(summary = "Lista de alunos por matéria (apenas PROFESSOR responsável)", security = @SecurityRequirement(name = "bearerAuth"))
-    ResponseEntity<Map<String, Object>> alunosPorMateria(@PathVariable("idMateria") Long idMateria);
+    ResponseEntity<Map<String, Object>> alunosPorMateria(@PathVariable Long idMateria);
+
+    @PostMapping("/notas")
+    @Operation(summary = "Lançar nota para um aluno (apenas PROFESSOR)", security = @SecurityRequirement(name = "bearerAuth"))
+    ResponseEntity<String> lancarNota(@RequestBody LancarNotaRequest request);
 
 }
-

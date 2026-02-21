@@ -2,9 +2,9 @@ package org.example.desafiodiogo.api.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.desafiodiogo.api.ProfessorApi;
-import org.example.desafiodiogo.service.AlunoService;
+import org.example.desafiodiogo.dto.professor.LancarNotaRequest;
+import org.example.desafiodiogo.service.NotaService;
 import org.example.desafiodiogo.service.ProfessorService;
-import org.example.desafiodiogo.service.UsersService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +15,7 @@ import java.util.Map;
 public class ProfessorControllerImpl implements ProfessorApi {
 
     private final ProfessorService professorService;
+    private final NotaService notaService;
 
     @Override
     public ResponseEntity<Map<String, Object>> dashboard() {
@@ -28,5 +29,10 @@ public class ProfessorControllerImpl implements ProfessorApi {
         return ResponseEntity.ok(result);
     }
 
-}
+    @Override
+    public ResponseEntity<String> lancarNota(LancarNotaRequest request) {
+        notaService.lancarNota(request);
+        return ResponseEntity.ok("Nota lançada com sucesso");
+    }
 
+}

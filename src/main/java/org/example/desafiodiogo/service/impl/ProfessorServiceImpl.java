@@ -10,6 +10,7 @@ import org.example.desafiodiogo.model.ProfessorMateriaSerie;
 import org.example.desafiodiogo.model.Serie;
 import org.example.desafiodiogo.model.Users;
 import org.example.desafiodiogo.repository.*;
+import org.example.desafiodiogo.service.AuthService;
 import org.example.desafiodiogo.service.ProfessorService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -29,6 +30,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     private final UsersRepository usersRepository;
     private final MateriaRepository materiaRepository;
     private final SerieRepository serieRepository;
+    private final AuthService authService;
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -63,7 +65,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     @Override
     @PreAuthorize("hasRole('PROFESSOR')")
     public Map<String, Object> getDashboardData() {
-        Users user = getCurrentUser();
+        Users user = authService.getCurrentUser();
 
         @SuppressWarnings("unchecked")
         List<Object[]> rows = entityManager.createNativeQuery(QueryEnum.DASHBOARD.getQuery())
@@ -97,7 +99,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     @Override
     @PreAuthorize("hasRole('PROFESSOR')")
     public Map<String, Object> alunosPorMateria(final Long idMateria) {
-        Users user = getCurrentUser();
+        Users user = authService.getCurrentUser();
 
         String verifySql = "SELECT COUNT(*) FROM professores_materias_series pms WHERE pms.user_id = ?1 AND pms.materia_id = ?2";
         Number count = ((Number) entityManager.createNativeQuery(verifySql)
@@ -132,17 +134,6 @@ public class ProfessorServiceImpl implements ProfessorService {
         }
 
         return Map.of("alunos", alunos);
-    }
-
-    private Users getCurrentUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Object principal = auth.getPrincipal();
-        if (principal instanceof Users) {
-            return (Users) principal;
-        }
-        String email = auth.getName();
-        return usersRepository.findUsersByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
     }
 }
 

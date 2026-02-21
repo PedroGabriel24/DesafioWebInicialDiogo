@@ -8,6 +8,7 @@ import org.example.desafiodiogo.model.ProfileEnum;
 import org.example.desafiodiogo.model.Users;
 import org.example.desafiodiogo.repository.UsersRepository;
 import org.example.desafiodiogo.service.AdminService;
+import org.example.desafiodiogo.service.AuthService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class AdminServiceImpl implements AdminService {
 
     private final UsersRepository usersRepository;
+    private final AuthService authService;
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
@@ -113,15 +115,7 @@ public class AdminServiceImpl implements AdminService {
         usersRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id: " + id));
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Object principal = auth.getPrincipal();
-        Users currentUser;
-        if (principal instanceof Users) {
-            currentUser = (Users) principal;
-        } else {
-            String email = auth.getName();
-            currentUser = usersRepository.findUsersByEmail(email).orElse(null);
-        }
+        Users currentUser = authService.getCurrentUser();
 
         if (currentUser != null && currentUser.getId().equals(id)) {
             throw new RuntimeException("Você não pode deletar sua própria conta");
