@@ -7,6 +7,8 @@ import org.example.desafiodiogo.service.UsersService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RequiredArgsConstructor
 @RestController
 public class UsersControllerImpl implements UsersApi {
@@ -17,6 +19,12 @@ public class UsersControllerImpl implements UsersApi {
     public ResponseEntity<String> cadastro(UsersRequest request) {
         usersService.cadastro(request);
         return ResponseEntity.ok("ok");
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> dashboard() {
+        Map<String, Object> dashboardData = usersService.getDashboardData();
+        return ResponseEntity.ok(dashboardData);
     }
 
 }

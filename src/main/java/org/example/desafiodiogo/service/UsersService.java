@@ -4,6 +4,8 @@ import org.example.desafiodiogo.dto.auth.ProfileJWTToken;
 import org.example.desafiodiogo.dto.users.UsersRequest;
 import org.example.desafiodiogo.model.Users;
 
+import java.util.Map;
+
 public interface UsersService {
 
     Users loginUser(final String email);
@@ -11,5 +13,7 @@ public interface UsersService {
     void cadastro(final UsersRequest request);
 
     ProfileJWTToken loadInfoUser(final Users user);
+
+    Map<String, Object> getDashboardData();
 
 }

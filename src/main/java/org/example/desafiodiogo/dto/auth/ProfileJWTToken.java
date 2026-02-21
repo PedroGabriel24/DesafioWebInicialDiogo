@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.desafiodiogo.model.Users;
 
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -17,7 +18,7 @@ public class ProfileJWTToken {
     private String name;
     private String email;
     private String profile;
-    private Map<String, Object> payload;
+    private List<Map<String, Object>> extras;
 
     public ProfileJWTToken(final Users info) {
         this.name = info.getNome();

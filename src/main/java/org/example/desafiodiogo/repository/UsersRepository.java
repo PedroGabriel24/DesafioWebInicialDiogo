@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -34,6 +35,6 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
             "    ON s.id = COALESCE(als.serie_id, pms.serie_id)\n" +
             "WHERE u.email = :email\n" +
             "AND u.tipo = :tipo;\n", nativeQuery = true)
-    Optional<Map<String, Object>> loadInfoUser(String email, String tipo);
+    List<Map<String, Object>> loadInfoUser(String email, String tipo);
 
 }
