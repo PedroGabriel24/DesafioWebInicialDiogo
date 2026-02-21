@@ -135,20 +135,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                 authorities.add(new SimpleGrantedAuthority("ROLE_" + payload.getProfile()));
                                 LOG.debug("Authority from payload.profile: ROLE_{}", payload.getProfile());
                             } else {
-                                Map<String, Object> inner = payload.getPayload();
-                                if (inner != null) {
-                                    Object tipo = inner.get("tipo");
-                                    Object profileObj = inner.get("profile");
-                                    Object roleObj = inner.get("role");
+                                // payload.getPayload() is declared as List<Map<String,Object>> in ProfileJWTToken
+                                List<Map<String, Object>> innerList = payload.getExtras();
+                                if (innerList != null && !innerList.isEmpty()) {
+                                    Map<String, Object> inner = innerList.get(0);
+                                    if (inner != null) {
+                                        Object tipo = inner.get("tipo");
+                                        Object profileObj = inner.get("profile");
+                                        Object roleObj = inner.get("role");
 
-                                    String resolved = null;
-                                    if (tipo != null) resolved = tipo.toString();
-                                    else if (profileObj != null) resolved = profileObj.toString();
-                                    else if (roleObj != null) resolved = roleObj.toString();
+                                        String resolved = null;
+                                        if (tipo != null) resolved = tipo.toString();
+                                        else if (profileObj != null) resolved = profileObj.toString();
+                                        else if (roleObj != null) resolved = roleObj.toString();
 
-                                    if (resolved != null && !resolved.isBlank()) {
-                                        authorities.add(new SimpleGrantedAuthority("ROLE_" + resolved));
-                                        LOG.debug("Authority from nested payload: ROLE_{}", resolved);
+                                        if (resolved != null && !resolved.isBlank()) {
+                                            authorities.add(new SimpleGrantedAuthority("ROLE_" + resolved));
+                                            LOG.debug("Authority from nested payload: ROLE_{}", resolved);
+                                        }
                                     }
                                 }
                             }
@@ -157,8 +161,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         LOG.debug("Failed to parse token payload for authorities: {}", ex.getMessage());
                     }
 
-                    if (authorities.isEmpty() && userDetails instanceof Users) {
-                        Users u = (Users) userDetails;
+                    if (authorities.isEmpty() && userDetails instanceof Users u) {
                         if (u.getTipo() != null) {
                             authorities.add(new SimpleGrantedAuthority("ROLE_" + u.getTipo().name()));
                             LOG.debug("Authority from user.tipo: ROLE_{}", u.getTipo().name());
