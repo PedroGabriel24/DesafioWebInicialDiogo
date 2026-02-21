@@ -10,10 +10,6 @@ public interface UsersService {
 
     Users loginUser(final String email);
 
-    void cadastro(final UsersRequest request);
-
     ProfileJWTToken loadInfoUser(final Users user);
-
-    Map<String, Object> getDashboardData();
 
 }
