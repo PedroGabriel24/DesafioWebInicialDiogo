@@ -11,11 +11,13 @@ import org.example.desafiodiogo.repository.SerieRepository;
 import org.example.desafiodiogo.repository.UsersRepository;
 import org.example.desafiodiogo.service.AlunoService;
 import org.example.desafiodiogo.service.AuthService;
+import org.example.desafiodiogo.service.BoletimPdfService;
 import org.example.desafiodiogo.service.NotaService;
 import org.example.desafiodiogo.service.UsersService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +30,7 @@ public class AlunoServiceImpl implements AlunoService {
     private final SerieRepository serieRepository;
     private final NotaService notaService;
     private final AuthService authService;
+    private final BoletimPdfService boletimPdfService;
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
@@ -56,6 +59,13 @@ public class AlunoServiceImpl implements AlunoService {
         Users currentUser = authService.getCurrentUser();
 
         return notaService.obterBoletimAluno(currentUser);
+    }
+
+    @Override
+    @PreAuthorize("hasRole('ALUNO')")
+    public byte[] gerarBoletimPdf() throws IOException {
+        BoletimResponse boletim = obterBoletimAluno();
+        return boletimPdfService.gerarPdfBoletim(boletim);
     }
 
     @Override

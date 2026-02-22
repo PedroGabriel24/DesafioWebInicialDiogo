@@ -18,4 +18,8 @@ public interface AlunosApi {
     @Operation(summary = "Lista matérias do aluno autenticado (apenas ALUNO)", security = @SecurityRequirement(name = "bearerAuth"))
     ResponseEntity<Object> listarMaterias();
 
+    @GetMapping("/boletim/pdf")
+    @Operation(summary = "Gera o boletim em PDF do aluno autenticado (apenas ALUNO)", security = @SecurityRequirement(name = "bearerAuth"))
+    ResponseEntity<byte[]> gerarBoletimPdf();
+
 }
