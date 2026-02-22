@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -28,8 +29,7 @@ public class JwtProvider {
     }
 
     public String generateToken(String email, Object payload) {
-
-        Map<String, Object> data =
+        List<Map<String, Object>> data =
                 objectMapper.convertValue(payload, new TypeReference<>() {});
 
         Date now = new Date();
