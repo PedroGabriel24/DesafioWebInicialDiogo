@@ -75,10 +75,6 @@ public class BoletimPdfServiceImpl implements BoletimPdfService {
         infoAluno.add(new Text("Nome do Aluno: ").setFont(fontHeader));
         infoAluno.add(new Text(boletim.getAlunoNome()).setFont(fontNormal));
         infoAluno.add("\n");
-
-        infoAluno.add(new Text("ID do Aluno: ").setFont(fontHeader));
-        infoAluno.add(new Text(String.valueOf(boletim.getAlunoId())).setFont(fontNormal));
-
         document.add(infoAluno);
 
         // =========================
