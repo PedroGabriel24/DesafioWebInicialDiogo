@@ -46,7 +46,7 @@ public class SecurityConfig {
                 new JwtAuthenticationFilter(tokenProvider, userDetailsService);
 
         http
-                .cors().and() // enable CORS support (uses corsConfigurationSource bean below)
+                .cors().and()
                 .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(ex ->
                         ex.authenticationEntryPoint(unauthorizedHandler))
@@ -65,8 +65,6 @@ public class SecurityConfig {
                 );
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-
-        // H2 console fix
         http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
 
         return http.build();
