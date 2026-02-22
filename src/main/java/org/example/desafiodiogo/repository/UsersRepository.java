@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -14,6 +14,8 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 
     @Query(value = "SELECT * FROM users where email = :email", nativeQuery = true)
     Optional<Users> findUsersByEmail(@Param("email") String email);
+
+    Boolean existsByEmail(String email);
 
     @Query(value = "SELECT \n" +
             "    u.tipo,\n" +
@@ -31,7 +33,7 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
             "LEFT JOIN series s\n" +
             "    ON s.id = COALESCE(als.serie_id, pms.serie_id)\n" +
             "WHERE u.email = :email\n" +
-            "AND u.tipo = :tipo;\n", nativeQuery = true)
-    Optional<Map<String, Object>> loadInfoUser(String email, String tipo);
+            "AND u.tipo = :tipo\n", nativeQuery = true)
+    List<Object[]> loadInfoUser(@Param("email") String email, @Param("tipo") String tipo);
 
 }

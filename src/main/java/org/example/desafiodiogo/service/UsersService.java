@@ -1,33 +1,19 @@
 package org.example.desafiodiogo.service;
 
-import lombok.RequiredArgsConstructor;
 import org.example.desafiodiogo.dto.auth.ProfileJWTToken;
+import org.example.desafiodiogo.dto.users.UsersRequest;
 import org.example.desafiodiogo.model.ProfileEnum;
 import org.example.desafiodiogo.model.Users;
-import org.example.desafiodiogo.repository.UsersRepository;
-import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
-@Service
-public class UsersService {
+import java.util.List;
+import java.util.Map;
 
-    private final UsersRepository usersRepository;
+public interface UsersService {
 
-    public Users loginUser(final String email) {
-        return usersRepository.findUsersByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Senha ou Email incorretos."));
-    }
+    Users findUsersByEmail(String email);
 
-    public ProfileJWTToken loadInfoUser(final Users user) {
-        ProfileJWTToken token = new ProfileJWTToken(user);
+    Users findUsersById(Long id);
 
-        if (user.getTipo() != ProfileEnum.ADMIN) {
-            var payload = usersRepository.loadInfoUser(user.getEmail(), user.getTipo().getProfileName())
-                    .orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
-            token.setPayload(payload);
-        }
-
-        return token;
-    }
+    List<Map<String, Object>> loadInfoUser(String email, ProfileEnum tipo);
 
 }

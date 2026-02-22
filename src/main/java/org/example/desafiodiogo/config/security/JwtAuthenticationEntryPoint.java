@@ -1,4 +1,4 @@
-package org.example.desafiodiogo.config;
+package org.example.desafiodiogo.config.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
