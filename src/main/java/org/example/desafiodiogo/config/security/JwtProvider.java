@@ -6,6 +6,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.example.desafiodiogo.dto.auth.ProfileJWTToken;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -28,16 +29,13 @@ public class JwtProvider {
         this.expirationMs = expirationMs;
     }
 
-    public String generateToken(String email, Object payload) {
-        List<Map<String, Object>> data =
-                objectMapper.convertValue(payload, new TypeReference<>() {});
-
+    public String generateToken(String email, ProfileJWTToken token) {
         Date now = new Date();
         Date expiry = new Date(now.getTime() + expirationMs);
 
         return Jwts.builder()
                 .setSubject(email)
-                .claim("payload", data)
+                .claim("payload", token)
                 .setIssuedAt(now)
                 .setExpiration(expiry)
                 .signWith(key, SignatureAlgorithm.HS256)
