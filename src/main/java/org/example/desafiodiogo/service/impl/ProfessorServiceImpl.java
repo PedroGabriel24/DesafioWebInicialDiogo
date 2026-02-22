@@ -1,7 +1,5 @@
 package org.example.desafiodiogo.service.impl;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.example.desafiodiogo.dto.professor.ProfessorMateriaSerieRequest;
 import org.example.desafiodiogo.dto.professor.ProfessorMateriaSerieResponse;
@@ -13,8 +11,6 @@ import org.example.desafiodiogo.repository.*;
 import org.example.desafiodiogo.service.AuthService;
 import org.example.desafiodiogo.service.ProfessorService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,8 +27,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     private final MateriaRepository materiaRepository;
     private final SerieRepository serieRepository;
     private final AuthService authService;
-    @PersistenceContext
-    private EntityManager entityManager;
+    private final ReportRepository reportRepository;
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
@@ -67,10 +62,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     public Map<String, Object> getDashboardData() {
         Users user = authService.getCurrentUser();
 
-        @SuppressWarnings("unchecked")
-        List<Object[]> rows = entityManager.createNativeQuery(QueryEnum.DASHBOARD.getQuery())
-                .setParameter(1, user.getId())
-                .getResultList();
+        List<Object[]> rows = reportRepository.getDashboard(user.getId());
 
         List<Map<String, Object>> materias = new ArrayList<>();
         for (Object[] r : rows) {
@@ -101,24 +93,15 @@ public class ProfessorServiceImpl implements ProfessorService {
     public Map<String, Object> alunosPorMateria(final Long idMateria) {
         Users user = authService.getCurrentUser();
 
-        String verifySql = "SELECT COUNT(*) FROM professores_materias_series pms WHERE pms.user_id = ?1 AND pms.materia_id = ?2";
-        Number count = ((Number) entityManager.createNativeQuery(verifySql)
-                .setParameter(1, user.getId())
-                .setParameter(2, idMateria)
-                .getSingleResult());
-        if (count == null || count.longValue() == 0L) {
+        long count = professorMateriaSerieRepository.countByProfessorIdAndMateriaId(user.getId(), idMateria);
+        if (count == 0L) {
             throw new RuntimeException("Professor não responsável por esta matéria");
         }
 
-        @SuppressWarnings("unchecked")
-        List<Object[]> rows = entityManager.createNativeQuery(QueryEnum.ALUNOS_POR_MATERIA.getQuery())
-                .setParameter(1, user.getId())
-                .setParameter(2, idMateria)
-                .getResultList();
+        List<Object[]> rows = reportRepository.getAlunosPorMateria(user.getId(), idMateria);
 
         List<Map<String, Object>> alunos = new ArrayList<>();
         for (Object[] r : rows) {
-            // columns: aluno_series_id, aluno_id, aluno_nome, serie_nome, jaLancouNota
             Number alunoIdNum = r[1] != null ? (Number) r[1] : 0;
             String nome = r[2] != null ? r[2].toString() : null;
             String serie = r[3] != null ? r[3].toString() : null;

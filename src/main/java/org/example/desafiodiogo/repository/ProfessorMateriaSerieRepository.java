@@ -1,6 +1,5 @@
 package org.example.desafiodiogo.repository;
 import java.util.Optional;
-import java.util.List;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +10,6 @@ public interface ProfessorMateriaSerieRepository extends JpaRepository<Professor
 
     Optional<ProfessorMateriaSerie> findByProfessorIdAndMateriaIdAndSerieId(Long professorId, Long materiaId, Long serieId);
 
-}
+    long countByProfessorIdAndMateriaId(Long professorId, Long materiaId);
 
+}
