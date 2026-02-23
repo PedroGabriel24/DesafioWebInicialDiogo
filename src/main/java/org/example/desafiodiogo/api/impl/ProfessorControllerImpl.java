@@ -35,4 +35,10 @@ public class ProfessorControllerImpl implements ProfessorApi {
         return ResponseEntity.ok("Nota lançada com sucesso");
     }
 
+    @Override
+    public ResponseEntity<String> alterarNota(LancarNotaRequest request) {
+        notaService.alterarNota(request);
+        return ResponseEntity.ok("Nota alterada com sucesso");
+    }
+
 }

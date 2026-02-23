@@ -7,11 +7,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface NotaRepository extends JpaRepository<Nota, Long> {
 
     List<Nota> findByAlunoSerieId(Long alunoSerieId);
+
+    Optional<Nota> findNotaByAlunoSerie_IdAndPeriodo_Id(Long alunoSerieId, Long periodoId);
 
     @Query("SELECT n FROM Nota n WHERE n.alunoSerie.aluno.id = :alunoId ORDER BY n.materia.nome, n.periodo.id")
     List<Nota> findByAlunoIdOrderByMateriaPeriodo(@Param("alunoId") Long alunoId);

@@ -52,6 +52,17 @@ public class NotaServiceImpl implements NotaService {
     }
 
     @Override
+    public void alterarNota(LancarNotaRequest request) {
+        Nota nota = notaRepository.findNotaByAlunoSerie_IdAndPeriodo_Id(
+                request.getAlunoSerieId(),
+                request.getPeriodoId())
+                .orElseThrow(() -> new RuntimeException("Nota não encontrada para os parâmetros fornecidos"));
+
+        nota.setNota(request.getNota());
+        notaRepository.save(nota);
+    }
+
+    @Override
     @PreAuthorize("hasRole('ALUNO')")
     public BoletimResponse obterBoletimAluno(Users aluno) {
         List<Nota> notas = notaRepository.findByAlunoIdOrderByMateriaPeriodo(aluno.getId());

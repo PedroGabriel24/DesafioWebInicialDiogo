@@ -23,4 +23,8 @@ public interface ProfessorApi {
     @Operation(summary = "Lançar nota para um aluno (apenas PROFESSOR)", security = @SecurityRequirement(name = "bearerAuth"))
     ResponseEntity<String> lancarNota(@RequestBody LancarNotaRequest request);
 
+    @PutMapping("/notas")
+    @Operation(summary = "Alterar nota para um aluno (apenas PROFESSOR)", security = @SecurityRequirement(name = "bearerAuth"))
+    ResponseEntity<String> alterarNota(@RequestBody LancarNotaRequest request);
+
 }
