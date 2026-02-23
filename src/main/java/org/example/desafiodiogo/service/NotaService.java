@@ -7,6 +7,8 @@ import org.example.desafiodiogo.model.Users;
 public interface NotaService {
     void lancarNota(LancarNotaRequest request);
 
+    void alterarNota(LancarNotaRequest request);
+
     BoletimResponse obterBoletimAluno(Users aluno);
 }
 
