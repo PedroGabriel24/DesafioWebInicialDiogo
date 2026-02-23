@@ -81,7 +81,7 @@ public class BoletimPdfServiceImpl implements BoletimPdfService {
         // TABELA DE NOTAS
         // =========================
 
-        float[] columnWidths = {4f, 1.5f, 1.5f, 1.5f, 1.5f, 1.5f};
+        float[] columnWidths = {4f, 1.5f, 1.5f, 1.5f};
         Table table = new Table(UnitValue.createPercentArray(columnWidths));
         table.setWidth(UnitValue.createPercentValue(100));
         table.setMarginTop(10);
@@ -89,10 +89,8 @@ public class BoletimPdfServiceImpl implements BoletimPdfService {
 
         // Header
         addHeaderCell(table, "Disciplina", fontHeader);
-        addHeaderCell(table, "1º", fontHeader);
-        addHeaderCell(table, "2º", fontHeader);
-        addHeaderCell(table, "3º", fontHeader);
-        addHeaderCell(table, "4º", fontHeader);
+        addHeaderCell(table, "1º Semestre", fontHeader);
+        addHeaderCell(table, "2º Semestre", fontHeader);
         addHeaderCell(table, "Média", fontHeader);
 
         boolean alternate = false;
@@ -121,8 +119,7 @@ public class BoletimPdfServiceImpl implements BoletimPdfService {
                 }
             }
 
-            // Completar períodos faltantes até 4
-            for (int i = disciplina.getNotas().size(); i < 4; i++) {
+            for (int i = disciplina.getNotas().size(); i < 2; i++) {
                 addCell(table, "-", fontNormal, bgColor);
             }
 
