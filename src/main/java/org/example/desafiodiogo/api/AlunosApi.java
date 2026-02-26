@@ -3,9 +3,12 @@ package org.example.desafiodiogo.api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.example.desafiodiogo.dto.aluno.BoletimResponse;
+import org.example.desafiodiogo.dto.observacoes.ObservacoesResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @RequestMapping("/aluno")
 public interface AlunosApi {
@@ -21,5 +24,9 @@ public interface AlunosApi {
     @GetMapping("/boletim/pdf")
     @Operation(summary = "Gera o boletim em PDF do aluno autenticado (apenas ALUNO)", security = @SecurityRequirement(name = "bearerAuth"))
     ResponseEntity<byte[]> gerarBoletimPdf();
+
+    @GetMapping("/observacoes")
+    @Operation(summary = "Listar observações do aluno authenticado (apenas ALUNO)", security = @SecurityRequirement(name = "bearerAuth"))
+    ResponseEntity<List<ObservacoesResponse>> listarObservacoes();
 
 }

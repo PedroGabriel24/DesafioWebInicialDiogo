@@ -2,10 +2,13 @@ package org.example.desafiodiogo.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.example.desafiodiogo.dto.observacoes.ObservacoesRequest;
+import org.example.desafiodiogo.dto.observacoes.ObservacoesResponse;
 import org.example.desafiodiogo.dto.professor.LancarNotaRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RequestMapping("/professor")
@@ -26,5 +29,13 @@ public interface ProfessorApi {
     @PutMapping("/notas")
     @Operation(summary = "Alterar nota para um aluno (apenas PROFESSOR)", security = @SecurityRequirement(name = "bearerAuth"))
     ResponseEntity<String> alterarNota(@RequestBody LancarNotaRequest request);
+
+    @PostMapping("/observacoes")
+    @Operation(summary = "Adicionar observação para um aluno (apenas PROFESSOR)", security = @SecurityRequirement(name = "bearerAuth"))
+    ResponseEntity<String> adicionarObservacao(@RequestBody ObservacoesRequest request);
+
+    @GetMapping("/observacoes")
+    @Operation(summary = "Listar observações do professor authenticado (apenas PROFESSOR)", security = @SecurityRequirement(name = "bearerAuth"))
+    ResponseEntity<List<ObservacoesResponse>> listarObservacoes();
 
 }
