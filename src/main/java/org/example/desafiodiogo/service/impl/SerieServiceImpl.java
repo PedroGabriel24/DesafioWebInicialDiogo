@@ -49,7 +49,7 @@ public class SerieServiceImpl implements SerieService {
 
         Serie serie = serieRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Série não encontrada com id: " + id));
+                        new IllegalArgumentException("Série não encontrada com id: " + id));
 
         return new SerieResponse(serie);
     }
@@ -60,7 +60,7 @@ public class SerieServiceImpl implements SerieService {
 
         Serie serie = serieRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Série não encontrada com id: " + id));
+                        new IllegalArgumentException("Série não encontrada com id: " + id));
 
         if (request.getNome() != null && !request.getNome().isEmpty()) {
             serie.setNome(request.getNome());
@@ -77,7 +77,7 @@ public class SerieServiceImpl implements SerieService {
 
         Serie serie = serieRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Série não encontrada com id: " + id));
+                        new IllegalArgumentException("Série não encontrada com id: " + id));
 
         serieRepository.delete(serie);
     }

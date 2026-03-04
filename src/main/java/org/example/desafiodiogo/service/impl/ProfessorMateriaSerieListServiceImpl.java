@@ -29,7 +29,7 @@ public class ProfessorMateriaSerieListServiceImpl implements ProfessorMateriaSer
                 .collect(Collectors.toList());
 
         if (materiasDoProf.isEmpty()) {
-            throw new RuntimeException("Nenhuma matéria encontrada para o professor com id: " + professorId);
+            throw new IllegalArgumentException("Nenhuma matéria encontrada para o professor com id: " + professorId);
         }
 
         ProfessorMateriaSerie primeiraMaterias = materiasDoProf.get(0);
@@ -57,7 +57,7 @@ public class ProfessorMateriaSerieListServiceImpl implements ProfessorMateriaSer
                 .collect(Collectors.toList());
 
         if (professoresMateria.isEmpty()) {
-            throw new RuntimeException("Nenhum professor encontrado para a matéria com id: " + materiaId);
+            throw new IllegalArgumentException("Nenhum professor encontrado para a matéria com id: " + materiaId);
         }
 
         ProfessorMateriaSerie primeiroRegistro = professoresMateria.get(0);
@@ -81,7 +81,7 @@ public class ProfessorMateriaSerieListServiceImpl implements ProfessorMateriaSer
     @PreAuthorize("hasRole('ADMIN')")
     public void deletarProfessorMateriaSerie(final Long id) {
         ProfessorMateriaSerie professorMateriaSerie = professorMateriaSerieRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Professor-Materia-Serie não encontrado com id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Professor-Materia-Serie não encontrado com id: " + id));
         professorMateriaSerieRepository.delete(professorMateriaSerie);
     }
 

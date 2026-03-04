@@ -29,7 +29,7 @@ public class AuthServiceImpl implements AuthService {
     public String loginUser(final AuthRequestParams params) {
         Users infoLogin = usersService.findUsersByEmail(params.getEmail());
         if (!passwordEncoder.matches(params.getSenha(), infoLogin.getPassword())) {
-            throw new RuntimeException("Senha inválida.");
+            throw new IllegalArgumentException("Senha inválida.");
         }
         return loadPayload(infoLogin);
     }

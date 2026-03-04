@@ -20,12 +20,12 @@ public class UsersServiceImpl implements UsersService {
 
     public Users findUsersByEmail(final String email) {
         return usersRepository.findUsersByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Senha ou Email incorretos."));
+                .orElseThrow(() -> new IllegalArgumentException("Senha ou Email incorretos."));
     }
 
     public Users findUsersById(final Long id) {
         return usersRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Aluno não encontrado com id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Aluno não encontrado com id: " + id));
     }
 
     public List<Map<String, Object>> loadInfoUser(final String email, final ProfileEnum tipo) {

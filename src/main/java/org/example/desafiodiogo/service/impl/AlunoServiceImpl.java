@@ -37,13 +37,13 @@ public class AlunoServiceImpl implements AlunoService {
     public AlunoSerieResponse adicionarAlunoASerie(AlunoSerieRequest request) {
         var existing = alunosSerieRepository.findByAlunoIdAndSerieId(request.getAlunoId(), request.getSerieId());
         if (existing.isPresent()) {
-            throw new RuntimeException("Aluno já existe nesta série");
+            throw new IllegalArgumentException("Aluno já existe nesta série");
         }
 
         Users aluno = usersService.findUsersById(request.getAlunoId());
 
         var serie = serieRepository.findById(request.getSerieId())
-                .orElseThrow(() -> new RuntimeException("Série não encontrada com id: " + request.getSerieId()));
+                .orElseThrow(() -> new IllegalArgumentException("Série não encontrada com id: " + request.getSerieId()));
 
         AlunosSerie alunosSerie = AlunosSerie.builder()
                 .aluno(aluno)
