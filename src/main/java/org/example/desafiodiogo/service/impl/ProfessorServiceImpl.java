@@ -35,17 +35,17 @@ public class ProfessorServiceImpl implements ProfessorService {
         var existing = professorMateriaSerieRepository.findByProfessorIdAndMateriaIdAndSerieId(
                 request.getProfessorId(), request.getMateriaId(), request.getSerieId());
         if (existing.isPresent()) {
-            throw new RuntimeException("Professor já está associado a esta matéria e série");
+            throw new IllegalArgumentException("Professor já está associado a esta matéria e série");
         }
 
         Users professor = usersRepository.findById(request.getProfessorId())
-                .orElseThrow(() -> new RuntimeException("Professor não encontrado com id: " + request.getProfessorId()));
+                .orElseThrow(() -> new IllegalArgumentException("Professor não encontrado com id: " + request.getProfessorId()));
 
         Materia materia = materiaRepository.findById(request.getMateriaId())
-                .orElseThrow(() -> new RuntimeException("Matéria não encontrada com id: " + request.getMateriaId()));
+                .orElseThrow(() -> new IllegalArgumentException("Matéria não encontrada com id: " + request.getMateriaId()));
 
         Serie serie = serieRepository.findById(request.getSerieId())
-                .orElseThrow(() -> new RuntimeException("Série não encontrada com id: " + request.getSerieId()));
+                .orElseThrow(() -> new IllegalArgumentException("Série não encontrada com id: " + request.getSerieId()));
 
         ProfessorMateriaSerie professorMateriaSerie = ProfessorMateriaSerie.builder()
                 .professor(professor)

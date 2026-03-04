@@ -30,7 +30,7 @@ public class AdminServiceImpl implements AdminService {
     @PreAuthorize("hasRole('ADMIN')")
     public UsersResponse cadastro(final UsersRequest request) {
         if (usersRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email já cadastrado.");
+            throw new IllegalArgumentException("Email já cadastrado.");
         }
         Users user = Users.builder()
                 .nome(request.getNome())
@@ -60,7 +60,7 @@ public class AdminServiceImpl implements AdminService {
     @PreAuthorize("hasRole('ADMIN')")
     public UsersResponse obterUsuarioPorId(final Long id) {
         Users user = usersRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado com id: " + id));
         return new UsersResponse(user);
     }
 
@@ -68,7 +68,7 @@ public class AdminServiceImpl implements AdminService {
     @PreAuthorize("hasRole('ADMIN')")
     public UsersResponse atualizarUsuario(final Long id, final UsersUpdateRequest request) {
         Users user = usersRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado com id: " + id));
 
         if (request.getNome() != null && !request.getNome().isEmpty()) {
             user.setNome(request.getNome());
@@ -76,7 +76,7 @@ public class AdminServiceImpl implements AdminService {
 
         if (request.getEmail() != null && !request.getEmail().isEmpty()) {
             if (!user.getEmail().equals(request.getEmail()) && usersRepository.existsByEmail(request.getEmail())) {
-                throw new RuntimeException("Email já cadastrado.");
+                throw new IllegalArgumentException("Email já cadastrado.");
             }
             user.setEmail(request.getEmail());
         }
@@ -113,12 +113,12 @@ public class AdminServiceImpl implements AdminService {
     @PreAuthorize("hasRole('ADMIN')")
     public void deletarUsuario(final Long id) {
         usersRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado com id: " + id));
 
         Users currentUser = authService.getCurrentUser();
 
         if (currentUser != null && currentUser.getId().equals(id)) {
-            throw new RuntimeException("Você não pode deletar sua própria conta");
+            throw new IllegalArgumentException("Você não pode deletar sua própria conta");
         }
 
         usersRepository.deleteById(id);

@@ -32,13 +32,13 @@ public class NotaServiceImpl implements NotaService {
     @PreAuthorize("hasRole('PROFESSOR')")
     public void lancarNota(LancarNotaRequest request) {
         AlunosSerie als = alunosSerieRepository.findById(request.getAlunoSerieId())
-                .orElseThrow(() -> new RuntimeException("Aluno-Série não encontrado"));
+                .orElseThrow(() -> new IllegalArgumentException("Aluno-Série não encontrado"));
 
         Materia materia = materiaRepository.findById(request.getMateriaId())
-                .orElseThrow(() -> new RuntimeException("Matéria não encontrada"));
+                .orElseThrow(() -> new IllegalArgumentException("Matéria não encontrada"));
 
         Periodo periodo = periodoRepository.findById(request.getPeriodoId())
-                .orElseThrow(() -> new RuntimeException("Período não encontrado"));
+                .orElseThrow(() -> new IllegalArgumentException("Período não encontrado"));
 
         Nota nota = Nota.builder()
                 .alunoSerie(als)
@@ -56,7 +56,7 @@ public class NotaServiceImpl implements NotaService {
         Nota nota = notaRepository.findNotaByAlunoSerie_IdAndPeriodo_Id(
                 request.getAlunoSerieId(),
                 request.getPeriodoId())
-                .orElseThrow(() -> new RuntimeException("Nota não encontrada para os parâmetros fornecidos"));
+                .orElseThrow(() -> new IllegalArgumentException("Nota não encontrada para os parâmetros fornecidos"));
 
         nota.setNota(request.getNota());
         notaRepository.save(nota);

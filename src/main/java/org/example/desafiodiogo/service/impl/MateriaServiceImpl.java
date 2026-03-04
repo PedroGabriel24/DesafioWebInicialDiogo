@@ -41,7 +41,7 @@ public class MateriaServiceImpl implements MateriaService {
     @PreAuthorize("hasRole('ADMIN')")
     public MateriaResponse obterMateriaPorId(final Long id) {
         Materia materia = materiaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Matéria não encontrada com id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Matéria não encontrada com id: " + id));
         return new MateriaResponse(materia);
     }
 
@@ -49,7 +49,7 @@ public class MateriaServiceImpl implements MateriaService {
     @PreAuthorize("hasRole('ADMIN')")
     public MateriaResponse atualizarMateria(final Long id, final MateriaRequest request) {
         Materia materia = materiaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Matéria não encontrada com id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Matéria não encontrada com id: " + id));
 
         if (request.getNome() != null && !request.getNome().isEmpty()) {
             materia.setNome(request.getNome());
@@ -63,7 +63,7 @@ public class MateriaServiceImpl implements MateriaService {
     @PreAuthorize("hasRole('ADMIN')")
     public void deletarMateria(final Long id) {
         Materia materia = materiaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Matéria não encontrada com id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Matéria não encontrada com id: " + id));
         materiaRepository.delete(materia);
     }
 

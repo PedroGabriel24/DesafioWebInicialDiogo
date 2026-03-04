@@ -28,13 +28,13 @@ public class SerieMateriaServiceImpl implements SerieMateriaService {
     @PreAuthorize("hasRole('ADMIN')")
     public SerieMateriaResponse criarSerieMateria(final SerieMateriaRequest request) {
         Serie serie = serieRepository.findById(request.getSerieId())
-                .orElseThrow(() -> new RuntimeException("Série não encontrada com id: " + request.getSerieId()));
+                .orElseThrow(() -> new IllegalArgumentException("Série não encontrada com id: " + request.getSerieId()));
 
         Materia materia = materiaRepository.findById(request.getMateriaId())
-                .orElseThrow(() -> new RuntimeException("Matéria não encontrada com id: " + request.getMateriaId()));
+                .orElseThrow(() -> new IllegalArgumentException("Matéria não encontrada com id: " + request.getMateriaId()));
 
         if (serieMateriaRepository.findBySerieIdAndMateriaId(serie.getId(), materia.getId()).isPresent()) {
-            throw new RuntimeException("Associação Série-Matéria já existe");
+            throw new IllegalArgumentException("Associação Série-Matéria já existe");
         }
 
         SerieMateria serieMateria = SerieMateria.builder()
@@ -66,7 +66,7 @@ public class SerieMateriaServiceImpl implements SerieMateriaService {
     @PreAuthorize("hasRole('ADMIN')")
     public void deletarSerieMateria(final Long id) {
         SerieMateria serieMateria = serieMateriaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Serie-Materia não encontrado com id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Serie-Materia não encontrado com id: " + id));
         serieMateriaRepository.delete(serieMateria);
     }
 }
