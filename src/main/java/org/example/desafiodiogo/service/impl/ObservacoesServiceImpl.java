@@ -4,8 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.example.desafiodiogo.dto.observacoes.ObservacoesRequest;
 import org.example.desafiodiogo.dto.observacoes.ObservacoesResponse;
 import org.example.desafiodiogo.model.Observacoes;
-import org.example.desafiodiogo.model.ProfileEnum;
+import org.example.desafiodiogo.model.enums.ProfileEnum;
 import org.example.desafiodiogo.model.Users;
+import org.example.desafiodiogo.model.enums.StatusObservacaoEnum;
 import org.example.desafiodiogo.repository.ObservacoesRepository;
 import org.example.desafiodiogo.repository.UsersRepository;
 import org.example.desafiodiogo.service.AuthService;
@@ -39,7 +40,7 @@ public class ObservacoesServiceImpl implements ObservacoesService {
                 .aluno(aluno)
                 .professor(currentUser)
                 .mensagem(request.getMensagem())
-                .status(request.getStatus())
+                .status(StatusObservacaoEnum.valueOf(request.getStatus()))
                 .build();
 
         observacoesRepository.save(observacoes);

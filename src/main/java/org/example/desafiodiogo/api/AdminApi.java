@@ -53,10 +53,6 @@ public interface AdminApi {
             @PathVariable Long id,
             @RequestBody UsersUpdateRequest request);
 
-    @DeleteMapping("/usuarios/{id}")
-    @Operation(summary = "Deleta um usuário (apenas ADMIN)")
-    ResponseEntity<Void> deletarUsuario(@PathVariable Long id);
-
     // ALUNO - SÉRIE
 
     @PostMapping("/alunos/series")

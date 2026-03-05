@@ -1,7 +1,7 @@
 package org.example.desafiodiogo.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.desafiodiogo.model.ProfileEnum;
+import org.example.desafiodiogo.model.enums.ProfileEnum;
 import org.example.desafiodiogo.model.Users;
 import org.example.desafiodiogo.repository.UsersRepository;
 import org.example.desafiodiogo.service.UsersService;
