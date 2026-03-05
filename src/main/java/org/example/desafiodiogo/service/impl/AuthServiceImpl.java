@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.desafiodiogo.config.security.JwtProvider;
 import org.example.desafiodiogo.dto.auth.AuthRequestParams;
 import org.example.desafiodiogo.dto.auth.ProfileJWTToken;
-import org.example.desafiodiogo.model.ProfileEnum;
 import org.example.desafiodiogo.model.Users;
 import org.example.desafiodiogo.service.AuthService;
 import org.example.desafiodiogo.service.UsersService;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -30,6 +28,9 @@ public class AuthServiceImpl implements AuthService {
         Users infoLogin = usersService.findUsersByEmail(params.getEmail());
         if (!passwordEncoder.matches(params.getSenha(), infoLogin.getPassword())) {
             throw new IllegalArgumentException("Senha inválida.");
+        }
+        if (infoLogin.getStatus().equals("A")) {
+            throw new IllegalArgumentException("Usuário inativo.");
         }
         return loadPayload(infoLogin);
     }
