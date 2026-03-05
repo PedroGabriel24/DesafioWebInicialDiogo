@@ -43,9 +43,6 @@ public class BoletimPdfServiceImpl implements BoletimPdfService {
         PdfFont fontHeader = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
         PdfFont fontNormal = PdfFontFactory.createFont(StandardFonts.HELVETICA);
 
-        // =========================
-        // TÍTULO
-        // =========================
 
         Paragraph title = new Paragraph("BOLETIM ESCOLAR")
                 .setFont(fontTitle)
@@ -63,9 +60,6 @@ public class BoletimPdfServiceImpl implements BoletimPdfService {
 
         document.add(data);
 
-        // =========================
-        // DADOS DO ALUNO
-        // =========================
 
         Paragraph infoAluno = new Paragraph()
                 .setFont(fontNormal)
@@ -77,9 +71,6 @@ public class BoletimPdfServiceImpl implements BoletimPdfService {
         infoAluno.add("\n");
         document.add(infoAluno);
 
-        // =========================
-        // TABELA DE NOTAS
-        // =========================
 
         float[] columnWidths = {4f, 1.5f, 1.5f, 1.5f};
         Table table = new Table(UnitValue.createPercentArray(columnWidths));
@@ -87,7 +78,6 @@ public class BoletimPdfServiceImpl implements BoletimPdfService {
         table.setMarginTop(10);
         table.setMarginBottom(20);
 
-        // Header
         addHeaderCell(table, "Disciplina", fontHeader);
         addHeaderCell(table, "1º Semestre", fontHeader);
         addHeaderCell(table, "2º Semestre", fontHeader);
@@ -144,10 +134,6 @@ public class BoletimPdfServiceImpl implements BoletimPdfService {
 
         document.add(table);
 
-        // =========================
-        // FOOTER
-        // =========================
-
         Paragraph footer = new Paragraph(
                 "Documento gerado automaticamente pelo sistema escolar"
         )
@@ -162,10 +148,6 @@ public class BoletimPdfServiceImpl implements BoletimPdfService {
 
         return baos.toByteArray();
     }
-
-    // =========================
-    // MÉTODOS AUXILIARES
-    // =========================
 
     private void addHeaderCell(Table table, String text, PdfFont font) {
 
