@@ -125,7 +125,7 @@ public class BoletimPdfServiceImpl implements BoletimPdfService {
                         table,
                         mediaFinal.toString(),
                         fontHeader,
-                        new DeviceRgb(220, 235, 255)
+                        mediaFinal.compareTo(new BigDecimal(6)) < 0 ? new DeviceRgb(255, 182, 193) : new DeviceRgb(144, 238, 144)
                 );
             } else {
                 addCell(table, "-", fontNormal, bgColor);
