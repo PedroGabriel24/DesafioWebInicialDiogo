@@ -62,9 +62,7 @@ public class MateriaServiceImpl implements MateriaService {
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     public void deletarMateria(final Long id) {
-        Materia materia = materiaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Matéria não encontrada com id: " + id));
-        materiaRepository.delete(materia);
+        materiaRepository.deleteById(id);
     }
 
 }

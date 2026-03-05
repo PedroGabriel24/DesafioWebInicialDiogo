@@ -1,4 +1,4 @@
-package org.example.desafiodiogo.model;
+package org.example.desafiodiogo.model.enums;
 
 import lombok.Getter;
 

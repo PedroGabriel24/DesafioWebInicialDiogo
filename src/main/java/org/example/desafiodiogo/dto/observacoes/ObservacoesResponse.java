@@ -5,8 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.desafiodiogo.model.Observacoes;
-import org.example.desafiodiogo.model.ProfileEnum;
-import org.springframework.context.annotation.Profile;
+import org.example.desafiodiogo.model.enums.StatusObservacaoEnum;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +17,7 @@ public class ObservacoesResponse {
 
     private String nome;
     private String mensagem;
-    private String status;
+    private StatusObservacaoEnum status;
     private LocalDateTime data;
 
     public ObservacoesResponse(Observacoes observacao, boolean destinatario) {

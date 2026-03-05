@@ -16,6 +16,4 @@ public interface AdminService {
 
     UsersResponse atualizarUsuario(final Long id, final UsersUpdateRequest request);
 
-    void deletarUsuario(final Long id);
-
 }

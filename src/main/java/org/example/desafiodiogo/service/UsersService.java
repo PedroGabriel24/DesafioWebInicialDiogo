@@ -1,8 +1,6 @@
 package org.example.desafiodiogo.service;
 
-import org.example.desafiodiogo.dto.auth.ProfileJWTToken;
-import org.example.desafiodiogo.dto.users.UsersRequest;
-import org.example.desafiodiogo.model.ProfileEnum;
+import org.example.desafiodiogo.model.enums.ProfileEnum;
 import org.example.desafiodiogo.model.Users;
 
 import java.util.List;

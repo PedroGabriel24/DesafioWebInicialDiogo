@@ -66,12 +66,6 @@ public class AdminControllerImpl implements AdminApi {
     }
 
     @Override
-    public ResponseEntity<Void> deletarUsuario(Long id) {
-        adminService.deletarUsuario(id);
-        return ResponseEntity.ok().build();
-    }
-
-    @Override
     public ResponseEntity<AlunoSerieResponse> adicionarAlunoASerie(AlunoSerieRequest request) {
         AlunoSerieResponse response = alunoService.adicionarAlunoASerie(request);
         return ResponseEntity.ok(response);

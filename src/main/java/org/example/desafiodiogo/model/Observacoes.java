@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.desafiodiogo.model.enums.StatusObservacaoEnum;
 
 import java.time.LocalDateTime;
 
@@ -29,6 +30,6 @@ public class Observacoes {
     @ManyToOne
     @JoinColumn(name = "professor_id", nullable = false)
     private Users professor;
-    private String status;
+    private StatusObservacaoEnum status;
 
 }

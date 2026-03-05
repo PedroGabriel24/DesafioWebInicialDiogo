@@ -4,14 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.example.desafiodiogo.dto.users.UsersRequest;
 import org.example.desafiodiogo.dto.users.UsersResponse;
 import org.example.desafiodiogo.dto.users.UsersUpdateRequest;
-import org.example.desafiodiogo.model.ProfileEnum;
+import org.example.desafiodiogo.model.enums.ProfileEnum;
 import org.example.desafiodiogo.model.Users;
 import org.example.desafiodiogo.repository.UsersRepository;
 import org.example.desafiodiogo.service.AdminService;
 import org.example.desafiodiogo.service.AuthService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -41,7 +39,7 @@ public class AdminServiceImpl implements AdminService {
                 .nascimento(LocalDate.parse(request.getNascimento()))
                 .tipo(ProfileEnum.valueOf(request.getTipo()))
                 .telefone(request.getTelefone())
-                .status("A")
+                .status("ATIVO")
                 .build();
 
         Users savedUser = usersRepository.save(user);
@@ -52,6 +50,7 @@ public class AdminServiceImpl implements AdminService {
     @PreAuthorize("hasRole('ADMIN')")
     public List<UsersResponse> listarUsuarios() {
         return usersRepository.findAll().stream()
+                .filter(user -> !user.getTipo().equals(ProfileEnum.ADMIN))
                 .map(UsersResponse::new)
                 .collect(Collectors.toList());
     }
@@ -107,21 +106,6 @@ public class AdminServiceImpl implements AdminService {
 
         Users updatedUser = usersRepository.save(user);
         return new UsersResponse(updatedUser);
-    }
-
-    @Override
-    @PreAuthorize("hasRole('ADMIN')")
-    public void deletarUsuario(final Long id) {
-        usersRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado com id: " + id));
-
-        Users currentUser = authService.getCurrentUser();
-
-        if (currentUser != null && currentUser.getId().equals(id)) {
-            throw new IllegalArgumentException("Você não pode deletar sua própria conta");
-        }
-
-        usersRepository.deleteById(id);
     }
 
 }
