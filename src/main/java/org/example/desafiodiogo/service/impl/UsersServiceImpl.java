@@ -37,7 +37,8 @@ public class UsersServiceImpl implements UsersService {
                     Map<String, Object> m = new HashMap<>();
                     m.put("tipo", r[0] != null ? r[0].toString() : null);
                     m.put("materia", r[1] != null ? r[1].toString() : null);
-                    m.put("serie", r[2] != null ? r[2].toString() : null);
+                    m.put("materiaId", r[2] != null ? r[2].toString() : null);
+                    m.put("serie", r[3] != null ? r[3].toString() : null);
                     payload.add(m);
                 }
             }
