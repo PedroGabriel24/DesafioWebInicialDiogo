@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum StatusObservacaoEnum {
 
-    POSITVIVA("Positiva"),
+    POSITIVA("Positiva"),
     NEGATIVA("Negativa"),
     NEUTRA("Neutra");
 
