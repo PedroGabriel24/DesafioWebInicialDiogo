@@ -20,6 +20,7 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
     @Query(value = "SELECT \n" +
             "    u.tipo,\n" +
             "    m.nome AS materia,\n" +
+            "    m.id as materia_id,\n" +
             "    s.nome AS serie\n" +
             "FROM users u\n" +
             "LEFT JOIN alunos_series als \n" +

@@ -23,6 +23,7 @@ public class MateriaServiceImpl implements MateriaService {
     public MateriaResponse criarMateria(final MateriaRequest request) {
         Materia materia = Materia.builder()
                 .nome(request.getNome())
+                .status("ATIVO")
                 .build();
 
         Materia savedMateria = materiaRepository.save(materia);
@@ -62,7 +63,11 @@ public class MateriaServiceImpl implements MateriaService {
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     public void deletarMateria(final Long id) {
-        materiaRepository.deleteById(id);
+        Materia materia = materiaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Matéria não encontrada com id: " + id));
+        materia.setStatus("INATIVO");
+
+        materiaRepository.save(materia);
     }
 
 }

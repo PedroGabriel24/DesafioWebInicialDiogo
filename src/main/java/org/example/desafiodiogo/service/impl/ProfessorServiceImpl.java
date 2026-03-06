@@ -95,7 +95,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 
         long count = professorMateriaSerieRepository.countByProfessorIdAndMateriaId(user.getId(), idMateria);
         if (count == 0L) {
-            throw new RuntimeException("Professor não responsável por esta matéria");
+            throw new IllegalArgumentException("Professor não responsável por esta matéria");
         }
 
         List<Object[]> rows = reportRepository.getAlunosPorMateria(user.getId(), idMateria);
