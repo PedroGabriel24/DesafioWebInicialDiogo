@@ -5,7 +5,6 @@ import org.example.desafiodiogo.dto.materia.MateriaComProfessoresResponse;
 import org.example.desafiodiogo.dto.materia.ProfessorSeriePorMateriaResponse;
 import org.example.desafiodiogo.dto.professor.MateriaPorProfessorResponse;
 import org.example.desafiodiogo.dto.professor.ProfessorComMateriasResponse;
-import org.example.desafiodiogo.dto.professor.ProfessorMateriaSerieResponse;
 import org.example.desafiodiogo.model.ProfessorMateriaSerie;
 import org.example.desafiodiogo.repository.ProfessorMateriaSerieRepository;
 import org.example.desafiodiogo.service.ProfessorMateriaSerieListService;
@@ -83,6 +82,36 @@ public class ProfessorMateriaSerieListServiceImpl implements ProfessorMateriaSer
         ProfessorMateriaSerie professorMateriaSerie = professorMateriaSerieRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Professor-Materia-Serie não encontrado com id: " + id));
         professorMateriaSerieRepository.delete(professorMateriaSerie);
+    }
+
+    @Override
+    public List<ProfessorComMateriasResponse> listarProfessorMateriaSerie() {
+        List<ProfessorMateriaSerie> materiasDoProf = professorMateriaSerieRepository.findAll();
+
+        // Agrupar por professor para evitar duplicatas
+        return materiasDoProf.stream()
+                .collect(Collectors.groupingBy(pms -> pms.getProfessor().getId(),
+                        Collectors.toList()))
+                .values()
+                .stream()
+                .map(grupoProfessor -> {
+                    ProfessorMateriaSerie primeiro = grupoProfessor.get(0);
+                    List<MateriaPorProfessorResponse> materias = grupoProfessor.stream()
+                            .map(pms -> MateriaPorProfessorResponse.builder()
+                                    .materiaId(pms.getMateria().getId())
+                                    .materiaNome(pms.getMateria().getNome())
+                                    .serieId(pms.getSerie().getId())
+                                    .serieNome(pms.getSerie().getNome())
+                                    .build())
+                            .collect(Collectors.toList());
+
+                    return ProfessorComMateriasResponse.builder()
+                            .professorId(primeiro.getProfessor().getId())
+                            .professorNome(primeiro.getProfessor().getNome())
+                            .materias(materias)
+                            .build();
+                })
+                .collect(Collectors.toList());
     }
 
 }

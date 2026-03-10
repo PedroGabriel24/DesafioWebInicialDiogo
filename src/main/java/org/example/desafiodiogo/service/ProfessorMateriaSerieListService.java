@@ -14,5 +14,7 @@ public interface ProfessorMateriaSerieListService {
 
     void deletarProfessorMateriaSerie(final Long id);
 
+    List<ProfessorComMateriasResponse> listarProfessorMateriaSerie();
+
 }
 

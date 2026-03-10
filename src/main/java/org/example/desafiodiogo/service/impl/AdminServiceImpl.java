@@ -4,11 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.example.desafiodiogo.dto.users.UsersRequest;
 import org.example.desafiodiogo.dto.users.UsersResponse;
 import org.example.desafiodiogo.dto.users.UsersUpdateRequest;
-import org.example.desafiodiogo.model.enums.ProfileEnum;
 import org.example.desafiodiogo.model.Users;
+import org.example.desafiodiogo.model.enums.ProfileEnum;
 import org.example.desafiodiogo.repository.UsersRepository;
 import org.example.desafiodiogo.service.AdminService;
-import org.example.desafiodiogo.service.AuthService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -22,18 +21,17 @@ import java.util.stream.Collectors;
 public class AdminServiceImpl implements AdminService {
 
     private final UsersRepository usersRepository;
-    private final AuthService authService;
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     public UsersResponse cadastro(final UsersRequest request) {
-        if (usersRepository.existsByEmail(request.getEmail())) {
+        if (usersRepository.existsByEmail(String.join(".", request.getNome().toLowerCase().split(" ")) + "@escola.com")) {
             throw new IllegalArgumentException("Email já cadastrado.");
         }
         Users user = Users.builder()
                 .nome(request.getNome())
-                .email(request.getEmail())
-                .senha(AuthServiceImpl.encodePassword(request.getSenha()))
+                .email(String.join(".", request.getNome().toLowerCase().split(" ")) + "@escola.com")
+                .senha(AuthServiceImpl.encodePassword(request.getNome().split(" ")[0]) + "@12345")
                 .cpf(request.getCpf())
                 .cadastro(LocalDateTime.now())
                 .nascimento(LocalDate.parse(request.getNascimento()))

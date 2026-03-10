@@ -10,13 +10,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RequestMapping("/professor")
 public interface ProfessorApi {
 
     @GetMapping("/dashboard")
     @Operation(summary = "Retornar dados para Dashboard do professor", security = @SecurityRequirement(name = "bearerAuth"))
-    ResponseEntity<Map<String, Object>> dashboard();
+    ResponseEntity<Map<String, Object>> dashboard(
+            @RequestParam(required = false) Optional<Long> disciplinaId,
+            @RequestParam(required = false) Optional<Long> turmaId
+    );
 
     @GetMapping("/alunos-por-materia/{idMateria}")
     @Operation(summary = "Lista de alunos por matéria (apenas PROFESSOR responsável)", security = @SecurityRequirement(name = "bearerAuth"))

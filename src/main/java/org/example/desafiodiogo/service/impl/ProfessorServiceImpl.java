@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -59,10 +60,21 @@ public class ProfessorServiceImpl implements ProfessorService {
 
     @Override
     @PreAuthorize("hasRole('PROFESSOR')")
-    public Map<String, Object> getDashboardData() {
+    public Map<String, Object> getDashboardData(Optional<Long> disciplinaId, Optional<Long> turmaId) {
         Users user = authService.getCurrentUser();
 
-        List<Object[]> rows = reportRepository.getDashboard(user.getId());
+        List<Object[]> rows;
+
+        // Seleciona o método correto do repository baseado nos filtros fornecidos
+        if (disciplinaId.isPresent() && turmaId.isPresent()) {
+            rows = reportRepository.getDashboardPorDisciplinaETurma(user.getId(), disciplinaId.get(), turmaId.get());
+        } else if (disciplinaId.isPresent()) {
+            rows = reportRepository.getDashboardPorDisciplina(user.getId(), disciplinaId.get());
+        } else if (turmaId.isPresent()) {
+            rows = reportRepository.getDashboardPorTurma(user.getId(), turmaId.get());
+        } else {
+            rows = reportRepository.getDashboard(user.getId());
+        }
 
         List<Map<String, Object>> materias = new ArrayList<>();
         for (Object[] r : rows) {
@@ -70,6 +82,7 @@ public class ProfessorServiceImpl implements ProfessorService {
             Number totalAlunosNum = r[1] != null ? (Number) r[1] : 0;
             Object mediaObj = r[2];
             Number pendenciasNum = r[3] != null ? (Number) r[3] : 0;
+
 
             Double mediaTurma = null;
             if (mediaObj instanceof Number) {

@@ -179,4 +179,10 @@ public class AdminControllerImpl implements AdminApi {
         return ResponseEntity.ok().build();
     }
 
+    @Override
+    public ResponseEntity<List<ProfessorComMateriasResponse>> listarProfessorMateriaSerie() {
+        var list = professorMateriaSerieListService.listarProfessorMateriaSerie();
+        return ResponseEntity.ok(list);
+    }
+
 }
