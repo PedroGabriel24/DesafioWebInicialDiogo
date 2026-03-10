@@ -12,6 +12,8 @@ public interface AlunoService {
 
     AlunoSerieResponse adicionarAlunoASerie(AlunoSerieRequest request);
 
+    List<AlunoSerieResponse> listarAlunoSeries();
+
     BoletimResponse obterBoletimAluno();
 
     byte[] gerarBoletimPdf() throws IOException;

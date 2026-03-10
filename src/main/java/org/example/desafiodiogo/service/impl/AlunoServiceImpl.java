@@ -55,6 +55,15 @@ public class AlunoServiceImpl implements AlunoService {
     }
 
     @Override
+    public List<AlunoSerieResponse> listarAlunoSeries() {
+        List<AlunosSerie> data = alunosSerieRepository.findAll();
+
+        return data.stream()
+                .map(AlunoSerieResponse::new)
+                .toList();
+    }
+
+    @Override
     public BoletimResponse obterBoletimAluno() {
         Users currentUser = authService.getCurrentUser();
 
