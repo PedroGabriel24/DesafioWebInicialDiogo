@@ -108,6 +108,11 @@ public class AdminControllerImpl implements AdminApi {
     }
 
     @Override
+    public ResponseEntity<List<AlunoSerieResponse>> listarAlunosSeries() {
+        return ResponseEntity.ok(alunoService.listarAlunoSeries());
+    }
+
+    @Override
     public ResponseEntity<MateriaResponse> criarMateria(MateriaRequest request) {
         MateriaResponse response = materiaService.criarMateria(request);
         return ResponseEntity.ok(response);

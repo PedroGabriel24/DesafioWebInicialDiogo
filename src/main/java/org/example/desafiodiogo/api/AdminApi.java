@@ -96,6 +96,10 @@ public interface AdminApi {
     @Operation(summary = "Deleta uma série (apenas ADMIN)")
     ResponseEntity<Void> deletarSerie(@PathVariable Long id);
 
+    @GetMapping("/aluno-serie")
+    @Operation(summary = "Lista todos as alunos com suas devidas séries (apenas ADMIN)")
+    ResponseEntity<List<AlunoSerieResponse>> listarAlunosSeries();
+
     // CRUD - MATÉRIAS
 
     @PostMapping("/materias")
