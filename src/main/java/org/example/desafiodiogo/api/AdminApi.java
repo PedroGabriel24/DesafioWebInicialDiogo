@@ -70,7 +70,7 @@ public interface AdminApi {
     @Operation(summary = "Deleta uma associação professor-matéria-série (apenas ADMIN)")
     ResponseEntity<Void> deletarProfessorMateriaSerie(@PathVariable Long id);
 
-    @GetMapping("/professore-materias-series")
+    @GetMapping("/professores-materias-series")
     @Operation(summary = "Listar as matérias de todos professores lesiona e suas séries (apenas ADMIN)")
     ResponseEntity<List<ProfessorComMateriasResponse>> listarProfessorMateriaSerie();
 
