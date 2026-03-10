@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MateriaPorProfessorResponse {
 
+    private Long id;
     private Long materiaId;
     private String materiaNome;
     private Long serieId;

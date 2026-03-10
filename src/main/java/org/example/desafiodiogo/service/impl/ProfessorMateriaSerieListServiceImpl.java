@@ -98,6 +98,7 @@ public class ProfessorMateriaSerieListServiceImpl implements ProfessorMateriaSer
                     ProfessorMateriaSerie primeiro = grupoProfessor.get(0);
                     List<MateriaPorProfessorResponse> materias = grupoProfessor.stream()
                             .map(pms -> MateriaPorProfessorResponse.builder()
+                                    .id(pms.getId())
                                     .materiaId(pms.getMateria().getId())
                                     .materiaNome(pms.getMateria().getNome())
                                     .serieId(pms.getSerie().getId())

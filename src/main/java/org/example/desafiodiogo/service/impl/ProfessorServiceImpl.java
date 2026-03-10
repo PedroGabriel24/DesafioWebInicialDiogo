@@ -65,7 +65,6 @@ public class ProfessorServiceImpl implements ProfessorService {
 
         List<Object[]> rows;
 
-        // Seleciona o método correto do repository baseado nos filtros fornecidos
         if (disciplinaId.isPresent() && turmaId.isPresent()) {
             rows = reportRepository.getDashboardPorDisciplinaETurma(user.getId(), disciplinaId.get(), turmaId.get());
         } else if (disciplinaId.isPresent()) {
