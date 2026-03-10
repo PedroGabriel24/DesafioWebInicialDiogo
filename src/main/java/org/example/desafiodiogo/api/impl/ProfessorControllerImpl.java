@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,8 +24,8 @@ public class ProfessorControllerImpl implements ProfessorApi {
     private final ObservacoesService observacoesService;
 
     @Override
-    public ResponseEntity<Map<String, Object>> dashboard() {
-        Map<String, Object> dashboardData = professorService.getDashboardData();
+    public ResponseEntity<Map<String, Object>> dashboard(Optional<Long> disciplinaId, Optional<Long> turmaId) {
+        Map<String, Object> dashboardData = professorService.getDashboardData(disciplinaId, turmaId);
         return ResponseEntity.ok(dashboardData);
     }
 
