@@ -107,7 +107,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         // Try multiple locations for the token: Authorization (Bearer or raw), X-Auth-Token, query params, cookies, attributes
         String raw = findAuthorizationToken(request);
         String token = null;
