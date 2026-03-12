@@ -31,7 +31,7 @@ public class NotaServiceImpl implements NotaService {
     @Override
     @PreAuthorize("hasRole('PROFESSOR')")
     public void lancarNota(LancarNotaRequest request) {
-        AlunosSerie als = alunosSerieRepository.findById(request.getAlunoSerieId())
+        AlunosSerie als = alunosSerieRepository.findByAlunoId(request.getAlunoId())
                 .orElseThrow(() -> new IllegalArgumentException("Aluno-Série não encontrado"));
 
         Materia materia = materiaRepository.findById(request.getMateriaId())
@@ -53,8 +53,11 @@ public class NotaServiceImpl implements NotaService {
 
     @Override
     public void alterarNota(LancarNotaRequest request) {
+        AlunosSerie als = alunosSerieRepository.findByAlunoId(request.getAlunoId())
+                .orElseThrow(() -> new IllegalArgumentException("Aluno-Série não encontrado"));
+
         Nota nota = notaRepository.findNotaByAlunoSerie_IdAndPeriodo_Id(
-                request.getAlunoSerieId(),
+                als.getId(),
                 request.getPeriodoId())
                 .orElseThrow(() -> new IllegalArgumentException("Nota não encontrada para os parâmetros fornecidos"));
 

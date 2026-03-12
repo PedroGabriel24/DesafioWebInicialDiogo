@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LancarNotaRequest {
-    private Long alunoSerieId;
+    private Long alunoId;
     private Long materiaId;
     private Long periodoId;
     private BigDecimal nota;
