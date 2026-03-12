@@ -14,9 +14,7 @@ public interface AlunosSerieRepository extends JpaRepository<AlunosSerie, Long> 
 
     Optional<AlunosSerie> findByAlunoIdAndSerieId(Long alunoId, Long serieId);
 
-    List<AlunosSerie> findBySerieId(Long serieId);
-
-    List<AlunosSerie> findByAlunoId(Long alunoId);
+    Optional<AlunosSerie> findByAlunoId(Long alunoId);
 
     @Query(value = "SELECT als.id, als.user_id AS aluno_id, u.nome AS aluno_nome, als.serie_id, s.nome AS serie_nome, " +
             "CASE WHEN n.id IS NOT NULL THEN true ELSE false END AS ja_lancou_nota " +
