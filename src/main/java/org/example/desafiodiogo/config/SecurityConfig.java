@@ -60,6 +60,7 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"
                         ).permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/cadastro").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 );
